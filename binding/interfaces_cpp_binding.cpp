@@ -39,7 +39,29 @@ extern "C" {
     return (void *)c_string;
   }
 
-}
+  void *Interfaces_CPP_Copy_String(void *input) {
+    std::string *new_string = new std::string;
+    std::string *old_string = (std::string *) input;
+    (*new_string) = (*old_string);
+    return (void *)new_string;
+  }
+
+  void Interfaces_CPP_Delete_String(void *input) {
+    std::string *input_string = (std::string *)input;
+    delete input_string;
+  }
+
+  const char *Interfaces_CPP_To_C_String(void *input) {
+    std::string *input_str = (std::string *)input;
+    return input_str->c_str();
+  }
+
+  void Interfaces_CPP_To_CPP_String (const char *src, void *dst) {
+    std::string *dst_string = (std::string *)dst;
+    (*dst_string) = std::string(src);
+  }
+
+} // end extern "C"
 
 } // binding
 } // cpp

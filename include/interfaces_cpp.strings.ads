@@ -26,11 +26,19 @@
 -- POSSIBILITY OF SUCH DAMAGE.
 
 with Ada.Finalization;
-private with Interfaces.C.Extensions;
+with Interfaces.C.Extensions;
 
 package Interfaces_CPP.Strings is
 
+  --
+  -- Ada friendly representation of C++ string
+  --
   type CPP_String is new Ada.Finalization.Controlled with private;
+
+  --
+  -- Type to be used when interfacing with external binding code
+  --
+  type CPP_String_External is new Interfaces.C.Extensions.void_ptr;
 
   -- equivalent to empty string constructor
   overriding procedure Initialize (Object : in out CPP_String);
@@ -39,11 +47,21 @@ package Interfaces_CPP.Strings is
   -- deconstructor
   overriding procedure Finalize   (Object : in out CPP_String);
 
+  -- Returns Ada String representation
+  function To_Ada (Object: CPP_String) return String;
+  function To_Ada (External: CPP_String_External) return String;
+
+  -- Return C++ representation of Ada string
+  function To_CPP (Input: String) return CPP_String;
+  function To_CPP_External (Input: CPP_String) return CPP_String_External;
+
+  function Image (Object: CPP_String) return String renames To_Ada;
+
 private
 
   type CPP_String is new Ada.Finalization.Controlled with
     record
-      cpp_str : Interfaces.C.Extensions.void_ptr;
+      cpp_str : CPP_String_External;
     end record;
 
 end Interfaces_CPP.Strings;

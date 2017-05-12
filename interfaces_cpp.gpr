@@ -10,7 +10,7 @@ project Interfaces_CPP is
   end Naming;
 
   for Languages use ("Ada", "C++");
-  for Source_Dirs use ("include", "src");
+  for Source_Dirs use ("binding", "include", "src");
 
   for Object_Dir use "obj";
 

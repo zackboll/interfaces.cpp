@@ -34,8 +34,24 @@ namespace interfaces {
 namespace cpp {
 namespace binding {
 
+extern "C" {
+
 // Allocates and returns new string object in C-compatible format
-extern "C" void *Interfaces_CPP_Empty_String_Constructor(void);
+void *Interfaces_CPP_Empty_String_Constructor(void);
+
+// Copies string to new string and returns
+void *Interfaces_CPP_Copy_String(void *);
+
+// Deletes input string
+void Interfaces_CPP_Delete_String(void *);
+
+// Returns c style string
+const char *Interfaces_CPP_To_C_String(void *);
+
+// Populates C++ string from C string
+void Interfaces_CPP_To_CPP_String (const char *src, void *dst);
+
+} // end extern "C"
 
 } // binding
 } // cpp
