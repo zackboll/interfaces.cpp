@@ -25,6 +25,13 @@
 -- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 -- POSSIBILITY OF SUCH DAMAGE.
 
+with Interfaces.C.Extensions;
+
 package Interfaces_CPP is
+
+  use type Interfaces.C.Extensions.bool;
+
+  function To_Boolean (Input : Interfaces.C.Extensions.bool) return Boolean is
+    ((if Input = 0 then False else True));
 
 end Interfaces_CPP;

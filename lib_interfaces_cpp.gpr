@@ -1,0 +1,33 @@
+project Lib_Interfaces_CPP is
+
+  package Naming is 
+    for Casing use "lowercase";
+    for Specification_Suffix ("C++") use ".hpp";
+    for Implementation_Suffix ("C++") use ".cpp";
+    for Specification_Suffix ("Ada") use ".ads";
+    for Implementation_Suffix ("Ada") use ".adb";
+    for Dot_Replacement use ".";
+  end Naming;
+
+  CPP_Flags := ("-std=c++11", "-fPIC");
+
+  Ada_Flags := ("-gnatQ", "-gnatwa", "-gnatwX", "-gnatwB", "-gnatwJ",
+                "-gnatp", "-funswitch-loops", "-fgcse-after-reload",
+                "-fpredictive-commoning", "-gnatn", "-fPIC");  
+
+  package Compiler is 
+    for Default_Switches ("Ada") use Compiler'Default_Switches("Ada") & Ada_Flags;
+    for Default_Switches ("C++") use Compiler'Default_Switches("C++") & CPP_Flags;
+  end Compiler;
+
+  for Library_Name use "interfaces_cpp";
+  for Library_Dir use "lib";
+  for Library_Kind use "static";
+  --for Library_Kind use "dynamic";
+
+  for Languages use ("Ada", "C++");
+  for Source_Dirs use ("binding", "include", "src");
+
+  for Object_Dir use "obj";
+
+end Lib_Interfaces_CPP;
